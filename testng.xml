@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="All Test Suite">
+    <test verbose="2" name="D:/Selenium_Learning/LearningFramework">
+        <classes>
+            <!--<class name="tests.TestCase_Register">
+                <methods>
+                    <include name="verifyRegistrationWithAllMandatoryFields"/>
+                </methods>
+            </class>-->
+            <class name="tests.TestCase_Login">
+                <methods>
+                    <include name="verifyLoginWithValidCredentials"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>
