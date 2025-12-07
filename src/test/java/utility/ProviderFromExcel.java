@@ -14,9 +14,9 @@ public class ProviderFromExcel {
         int cells = ExcelFileHandling.getCellsCount(path, sheetName, rows);
         Object[][] data = new String[rows][cells];
         System.out.println(rows + " " + cells);
-        for (int i = 0; i < rows ; i++) {
+        for (int i = 1; i <= rows ; i++) {
             for (int j = 0; j < cells; j++) {
-                data[i][j] = ExcelFileHandling.getCellData(path, sheetName, i, j);
+                data[i-1][j] = ExcelFileHandling.getCellData(path, sheetName, i, j);
             }
         }
         return data;
