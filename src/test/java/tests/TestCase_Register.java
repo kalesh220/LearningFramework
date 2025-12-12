@@ -33,4 +33,8 @@ public class TestCase_Register extends Base {
 
         }
     }
+
+    public void verifyRegisterWithAllFields(){
+        
+    }
 }
