@@ -53,4 +53,7 @@ public class RegisterPage extends BasePage{
     public void clickContinueButton(){
         continueButton.click();
     }
+    public void clickYesSubscribeNewsLetter(){
+        subscribeNewsletter.click();
+    }
 }
