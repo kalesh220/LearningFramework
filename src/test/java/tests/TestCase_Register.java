@@ -23,6 +23,7 @@ public class TestCase_Register extends Base {
             registerPage.setInputTelephone("8877887788");
             registerPage.setInputPassword(prop.getProperty("password"));
             registerPage.setInputConfirmPassword(prop.getProperty("password"));
+            registerPage.clickYesSubscribeNewsLetter();
             registerPage.clickCheckboxPrivacyPolicy();
             registerPage.clickContinueButton();
 
@@ -35,6 +36,24 @@ public class TestCase_Register extends Base {
     }
 
     public void verifyRegisterWithAllFields(){
-        String name = "kalesh";
+         try {
+            HomePage homePage = new HomePage(driver);
+            homePage.clickMyAccountButton();
+            homePage.clickRegisterButton();
+
+            RegisterPage registerPage = new RegisterPage(driver);
+            registerPage.setInputFirstName("kaleswararao");
+            registerPage.setInputLastName("Nakuluri");
+            registerPage.setInputEmail(prop.getProperty("email"));
+            registerPage.setInputTelephone("8877887788");
+            registerPage.setInputPassword(prop.getProperty("password"));
+            registerPage.setInputConfirmPassword(prop.getProperty("password"));
+            registerPage.clickCheckboxPrivacyPolicy();
+            registerPage.clickContinueButton();
+
+            MyAccountPage mccPage = new MyAccountPage(driver);
+            Assert.assertTrue(mccPage.isTextAccountCreatedVisible());
+        } catch (Exception e) {
+            Assert.fail("Registration failed with :" + e.getMessage());
     }
 }
