@@ -55,5 +55,6 @@ public class TestCase_Register extends Base {
             Assert.assertTrue(mccPage.isTextAccountCreatedVisible());
         } catch (Exception e) {
             Assert.fail("Registration failed with :" + e.getMessage());
+            }
     }
 }
