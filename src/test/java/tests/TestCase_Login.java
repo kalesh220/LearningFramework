@@ -8,8 +8,6 @@ import pages.MyAccountPage;
 import utility.Base;
 import utility.ProviderFromExcel;
 
-import java.sql.Driver;
-
 public class TestCase_Login extends Base {
 
     @Test(dataProvider = "login-data", dataProviderClass = ProviderFromExcel.class)
