@@ -34,7 +34,7 @@ public class TestCase_Register extends Base {
 
         }
     }
-
+    @Test
     public void verifyRegisterWithAllFields(){
          try {
             HomePage homePage = new HomePage(driver);
