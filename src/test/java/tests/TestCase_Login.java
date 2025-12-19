@@ -19,7 +19,7 @@ public class TestCase_Login extends Base {
 
             LoginPage loginPage = new LoginPage(driver);
             loginPage.setInputEmailAddress(username);
-            loginPage.setInputPassword(prop.getProperty(password));
+            loginPage.setInputPassword(password);
             loginPage.clickLoginButton();
 
             MyAccountPage mccPage = new MyAccountPage(driver);
