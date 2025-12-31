@@ -1,0 +1,61 @@
+package utility;
+
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.Status;
+import com.aventstack.extentreports.reporter.ExtentSparkReporter;
+import com.aventstack.extentreports.reporter.configuration.Theme;
+import org.testng.ITestContext;
+import org.testng.ITestListener;
+import org.testng.ITestResult;
+
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+
+public class ReportManager implements ITestListener {
+
+    public static ExtentSparkReporter sparkReporter;
+    public static ExtentReports extentReports;
+    public static ExtentTest extentTest;
+    public static File filePath;
+
+    public void onStart(ITestContext context) {
+        filePath = new File(System.getProperty("user.dir")+ "/src/test/resources/reports/extentreport.html");
+        sparkReporter = new ExtentSparkReporter(filePath);
+        sparkReporter.config().setDocumentTitle("Tutorialsninja functional testing");
+        sparkReporter.config().setTheme(Theme.DARK);
+        sparkReporter.config().setReportName("Functional Testing");
+        extentReports = new ExtentReports();
+        extentReports.attachReporter(sparkReporter);
+        extentTest = extentReports.createTest(context.getName());
+    }
+
+    public void onTestStart(ITestResult result) {
+        extentTest.info(result.getName() + "Test Started");
+    }
+
+    public void onTestSuccess(ITestResult result) {
+        extentTest.log(Status.PASS, result.getTestName() + "Test Passed");
+    }
+
+    public void onTestFailure(ITestResult result) {
+        extentTest.log(Status.FAIL, result.getName() + " Test Failed");
+    }
+
+    public void onTestSkipped(ITestResult result) {
+        extentTest.log(Status.SKIP, result.getName() + "Test skipped");
+
+    }
+
+    public void onFinish(ITestContext context) {
+        extentTest.log(Status.INFO, "Test finished and flushing the report");
+        extentReports.flush();
+        try {
+            Desktop.getDesktop().browse(filePath.toURI());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+}
