@@ -12,6 +12,8 @@ import org.testng.ITestResult;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class ReportManager implements ITestListener {
 
@@ -21,22 +23,24 @@ public class ReportManager implements ITestListener {
     public static File filePath;
 
     public void onStart(ITestContext context) {
-        filePath = new File(System.getProperty("user.dir")+ "/src/test/resources/reports/extentreport.html");
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy_HH-mm-ss");
+        filePath = new File(System.getProperty("user.dir")+ "/src/test/resources/reports/extentreport_"+formatter.format(new Date())+".html");
         sparkReporter = new ExtentSparkReporter(filePath);
         sparkReporter.config().setDocumentTitle("Tutorialsninja functional testing");
         sparkReporter.config().setTheme(Theme.DARK);
         sparkReporter.config().setReportName("Functional Testing");
         extentReports = new ExtentReports();
         extentReports.attachReporter(sparkReporter);
-        extentTest = extentReports.createTest(context.getName());
+
     }
 
     public void onTestStart(ITestResult result) {
+        extentTest = extentReports.createTest(result.getMethod().getMethodName());
         extentTest.info(result.getName() + "Test Started");
     }
 
     public void onTestSuccess(ITestResult result) {
-        extentTest.log(Status.PASS, result.getTestName() + "Test Passed");
+        extentTest.log(Status.PASS, result.getName() + "Test Passed");
     }
 
     public void onTestFailure(ITestResult result) {
