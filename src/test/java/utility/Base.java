@@ -1,5 +1,8 @@
 package utility;
 
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
@@ -9,9 +12,12 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
+import java.util.Date;
 import java.util.Properties;
 
 public class Base {
@@ -48,5 +54,15 @@ public class Base {
             driver.quit();
         }
         fileInputStream.close();
+    }
+
+    public static String getScreenShotPath() throws IOException {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-hh_HH-mm-ss");
+        TakesScreenshot screenshot = (TakesScreenshot) driver;
+        File srcFile = screenshot.getScreenshotAs(OutputType.FILE);
+        String targetFilePath = System.getProperty("user.dir")+"/screenshots/screenshot_"+formatter.format(new Date())+".png";
+        File targetFile = new File(targetFilePath);
+        FileUtils.copyFile(srcFile, targetFile);
+        return targetFilePath;
     }
 }

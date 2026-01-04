@@ -2,6 +2,7 @@ package utility;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
@@ -24,7 +25,7 @@ public class ReportManager implements ITestListener {
 
     public void onStart(ITestContext context) {
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy_HH-mm-ss");
-        filePath = new File(System.getProperty("user.dir")+ "/src/test/resources/reports/extentreport_"+formatter.format(new Date())+".html");
+        filePath = new File(System.getProperty("user.dir")+ "/reports/extentreport_"+formatter.format(new Date())+".html");
         sparkReporter = new ExtentSparkReporter(filePath);
         sparkReporter.config().setDocumentTitle("Tutorialsninja functional testing");
         sparkReporter.config().setTheme(Theme.DARK);
@@ -44,7 +45,13 @@ public class ReportManager implements ITestListener {
     }
 
     public void onTestFailure(ITestResult result) {
-        extentTest.log(Status.FAIL, result.getName() + " Test Failed");
+
+        try {
+            extentTest.log(Status.FAIL, MediaEntityBuilder.createScreenCaptureFromPath(Base.getScreenShotPath()).build());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     public void onTestSkipped(ITestResult result) {
